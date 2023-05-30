@@ -1,13 +1,12 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GetModule } from './get/get.module';
-import { WeatherApiCallsModule } from './weather-api-calls/weather-api-calls.module';
-import { GetController } from './get/get.controller';
+import { WeatherApiCallsService } from './weather-api-calls/weather-api-calls.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [GetModule],
+  imports: [ConfigModule.forRoot({})],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, WeatherApiCallsService, ValidationPipe],
 })
 export class AppModule {}

@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { WeatherApiCallsService } from '../weather-api-calls.service';
+import axios from 'axios';
 
 describe('WeatherApiCallsService', () => {
   let service: WeatherApiCallsService;

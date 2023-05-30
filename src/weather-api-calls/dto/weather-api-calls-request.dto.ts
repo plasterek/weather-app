@@ -1,3 +1,9 @@
+import { IsNotEmpty } from 'class-validator';
+import { ApiKeyDTO } from './api-key.dto';
+import { WeatherApiCallsParameterDTO } from './weather-api-calls-parameter.dto';
+
 export class WeatherApiCallsRequestDTO {
-  constructor(readonly access_key: string, readonly query: string) {}
+  readonly access_key: ApiKeyDTO;
+  @IsNotEmpty()
+  readonly query: WeatherApiCallsParameterDTO;
 }
