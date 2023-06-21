@@ -4,11 +4,11 @@ import { AppModule } from '../app.module';
 import { ConfigService } from '@nestjs/config';
 import * as request from 'supertest';
 import { WeatherApiCallsService } from '../weather-api-calls/weather-api-calls.service';
-import { error } from 'console';
+import { WeatherApiResponseDTO } from 'src/weather-api-calls/dto/weather-api-response.dto';
 
 describe('AppController (e2e)', () => {
-  const mockedWeather = 'excellent';
-  const mockedCredentials = { key: 'X-Weather-API-KEY', value: 'apiKey' };
+  const mockedWeather: WeatherApiResponseDTO = { Weather: 'Excellent' };
+  const mockedCredentials: { key: string; value: string } = { key: 'X-Weather-API-KEY', value: 'apiKey' };
   let app: INestApplication;
   let weather: WeatherApiCallsService;
   let config: ConfigService;
@@ -46,7 +46,7 @@ describe('AppController (e2e)', () => {
   describe('When trying to call GET on /weather', () => {
     it('It should return welcome message', () => {
       //given
-      const response = { message: 'Welcome to weather app!' };
+      const response: { message: string } = { message: 'Welcome to weather app!' };
       //then
       return request(app.getHttpServer()).get('/weather/').expect(200).expect(response);
     });
@@ -71,9 +71,9 @@ describe('AppController (e2e)', () => {
   describe('When trying to call GET on /get/country/:country and everything goes well', () => {
     it('It should respond with 200 status and "excellent" weather', () => {
       //given
-      const expectedValue = { Weather: mockedWeather };
+      const expectedValue: WeatherApiResponseDTO = { Weather: mockedWeather };
       //when
-      jest.spyOn(weather, 'getCurrentWeather').mockResolvedValue(mockedWeather);
+      jest.spyOn(weather, 'getCurrentWeather').mockResolvedValue(expectedValue);
       //then
       return request(app.getHttpServer()).get('/weather/get/country/Germany').set(mockedCredentials.key, mockedCredentials.value).expect(200).expect(expectedValue);
     });
@@ -98,9 +98,9 @@ describe('AppController (e2e)', () => {
   describe('When trying to call GET on /get/city/:city and everything goes well', () => {
     it('It should respond with 200 status and "excellent" weather', () => {
       //given
-      const expectedValue = { Weather: mockedWeather };
+      const expectedValue: WeatherApiResponseDTO = { Weather: mockedWeather };
       //when
-      jest.spyOn(weather, 'getCurrentWeather').mockResolvedValue(mockedWeather);
+      jest.spyOn(weather, 'getCurrentWeather').mockResolvedValue(expectedValue);
       //then
       return request(app.getHttpServer()).get('/weather/get/city/Paris').set(mockedCredentials.key, mockedCredentials.value).expect(200).expect(expectedValue);
     });
@@ -125,9 +125,9 @@ describe('AppController (e2e)', () => {
   describe('When trying to call GET on /get/location/:latitude/:longitude and everything goes well', () => {
     it('It should respond with 200 status and "excellent" weather', () => {
       //given
-      const expectedValue = { Weather: mockedWeather };
+      const expectedValue: WeatherApiResponseDTO = { Weather: mockedWeather };
       //when
-      jest.spyOn(weather, 'getCurrentWeather').mockResolvedValue(mockedWeather);
+      jest.spyOn(weather, 'getCurrentWeather').mockResolvedValue(expectedValue);
       //then
       return request(app.getHttpServer()).get('/weather/get/location/42.123/43.125').set(mockedCredentials.key, mockedCredentials.value).expect(200).expect(expectedValue);
     });
